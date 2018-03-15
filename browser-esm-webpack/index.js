@@ -2,6 +2,7 @@ import * as monaco from 'monaco-editor';
 
 self.MonacoEnvironment = {
 	getWorkerUrl: function (moduleId, label) {
+		return './error.js';
 		if (label === 'json') {
 			return './json.worker.bundle.js';
 		}

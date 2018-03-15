@@ -2,6 +2,7 @@
   "name": "helloworld",
   "dependencies": {},
   "devDependencies": {
+    "babel-loader": "7.1.4",
     "css-loader": "^0.28.10",
     "monaco-editor": "^0.11.0",
     "style-loader": "^0.20.3",
