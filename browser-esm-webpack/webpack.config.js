@@ -1,18 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = {
+const config = {
 	mode: 'development',
-	entry: {
-		"app": './index.js',
-		"editor.worker": 'monaco-editor/esm/vs/editor/editor.worker.js',
-		"json.worker": 'monaco-editor/esm/vs/language/json/json.worker',
-		"css.worker": 'monaco-editor/esm/vs/language/css/css.worker',
-		"html.worker": 'monaco-editor/esm/vs/language/html/html.worker',
-		"ts.worker": 'monaco-editor/esm/vs/language/typescript/ts.worker',
-	},
 	output: {
-		filename: '[name].bundle.js',
 		path: path.resolve(__dirname, 'dist')
 	},
 	module: {
@@ -50,6 +41,31 @@ module.exports = {
 		)
 	],
 };
+
+module.exports = [
+	Object.assign({}, config, {
+		name: 'app',
+		target: 'web',
+		entry: './index.js',
+		output: Object.assign({}, config.output, {
+			filename: 'app.bundle.js'
+		})
+	}),
+	Object.assign({}, config, {
+		name: 'worker',
+		target: 'webworker',
+		entry: {
+			'editor': 'monaco-editor/esm/vs/editor/editor.worker.js',
+			'json': 'monaco-editor/esm/vs/language/json/json.worker.js',
+			'css': 'monaco-editor/esm/vs/language/css/css.worker.js',
+			'html': 'monaco-editor/esm/vs/language/html/html.worker.js',
+			'ts': 'monaco-editor/esm/vs/language/typescript/ts.worker.js'
+		},
+		output: Object.assign({}, config.output, {
+			filename: '[name].worker.bundle.js'
+		})
+	})
+];
 
 function replaceSelfRequireWithGlobalRequire() {
 	return (babel) => {
